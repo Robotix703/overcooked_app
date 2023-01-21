@@ -4,6 +4,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button [routerLink]="['/home']">
+        <ion-icon name="library-outline" aria-hidden="true"></ion-icon>
+        <ion-label>Recettes</ion-label>
+      </ion-tab-button>
 
+      <ion-tab-button [routerLink]="['/meal']">
+        <ion-icon name="fast-food-outline" aria-hidden="true"></ion-icon>
+        <ion-label>Repas</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button [routerLink]="['/pantry/list']">
+        <ion-icon name="storefront-outline" aria-hidden="true"></ion-icon>
+        <ion-label>Garde Manger</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button [routerLink]="['/todoist/list']">
+        <ion-icon name="receipt" aria-hidden="true"></ion-icon>
+        <ion-label>Todoist</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
