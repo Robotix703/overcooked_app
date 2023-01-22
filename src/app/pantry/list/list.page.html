@@ -4,8 +4,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-tabs>
+    <ion-list slot="top">
+      <ion-item-sliding *ngFor="let pantry of pantries" #slidingPantry>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img alt="Image de l'ingrédient" [src]="pantry.ingredientImage" />
+          </ion-thumbnail>
+          <ion-label>{{pantry.ingredientName}} - {{pantry.quantity}} {{pantry.quantityUnitOfMeasure}}</ion-label>
+          <ion-icon *ngIf="pantry.frozen" name="snow-outline"></ion-icon>
+          <ion-button *ngIf="pantry.expirationDate" (click)="updateExpirationDate(pantry.expirationDate)">{{pantry.expirationDate}}</ion-button>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deletePantry(pantry._id, slidingPantry)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/home']">
         <ion-icon name="library-outline" aria-hidden="true"></ion-icon>

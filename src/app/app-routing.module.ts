@@ -19,23 +19,28 @@ const routes: Routes = [
   },
   {
     path: 'meal',
-    loadChildren: () => import('./meal/meal.module').then( m => m.MealPageModule)
+    loadChildren: () => import('./meal/meal.module').then( m => m.MealPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'pantry/list',
-    loadChildren: () => import('./pantry/list/list.module').then( m => m.ListPageModule)
+    loadChildren: () => import('./pantry/list/list.module').then( m => m.ListPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'pantry/create',
-    loadChildren: () => import('./pantry/create/create.module').then( m => m.CreatePageModule)
+    loadChildren: () => import('./pantry/create/create.module').then( m => m.CreatePageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'todoist/create',
-    loadChildren: () => import('./todoist/create/create.module').then( m => m.CreatePageModule)
+    loadChildren: () => import('./todoist/create/create.module').then( m => m.CreatePageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'todoist/list',
-    loadChildren: () => import('./todoist/list/list.module').then( m => m.ListPageModule)
+    loadChildren: () => import('./todoist/list/list.module').then( m => m.ListPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 
