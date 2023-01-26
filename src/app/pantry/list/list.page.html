@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>list</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        [defaultHref]="'/home'"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Garde Manger</ion-title>
+    <ion-button [routerLink]="['/pantry/create']" slot="end" style="margin-right: 1rem;" color="success"><ion-icon name="add"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
