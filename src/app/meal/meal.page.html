@@ -1,11 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>meal</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        [defaultHref]="'/home'"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Repas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-tabs>
+    <ion-list slot="top" style="height: 100%; background-color: var(--ion-background-color);">
+      <ion-card *ngFor="let meal of meals">
+        <ion-card-header [routerLink]="['/recipe/', meal.recipeId]">
+          <ion-card-title>
+            {{meal.title}}
+            <ion-icon class="state-icon" *ngIf="meal.state.ingredientUnavailable.length === 0" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon class="state-icon" *ngIf="meal.state.ingredientUnavailable.length === 0 && meal.state.ingredientAlmostExpire.length > 0" name="alert-circle-outline"></ion-icon>
+            <ion-icon class="state-icon" *ngIf="meal.state.ingredientUnavailable.length > 0" name="ban-outline"></ion-icon>
+          </ion-card-title>
+          <img class="recipe-img" alt="Image du repas" width="200px" [src]="meal.imagePath"/>
+        </ion-card-header>
+
+        <ion-card-content *ngIf="meal.state.ingredientUnavailable.length > 0" [routerLink]="['/recipe/', meal.recipeId]">
+          <ion-list>
+            <ion-item *ngFor="let ingredient of meal.state.ingredientUnavailable">
+              <ion-thumbnail slot="start">
+                <img class="ingredient-img" alt="Image de l'ingrédient manquant" [src]="ingredient.ingredient.imagePath" />
+              </ion-thumbnail>
+              <ion-label>{{ingredient.ingredient.name}} - {{ingredient.quantity}} {{ingredient.ingredient.unitOfMeasure}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+
+        <ion-button style="float: right;" color="danger" (click)="deleteMeal(meal._id)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+      </ion-card>
+    </ion-list>
+
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/home']">
         <ion-icon name="library-outline" aria-hidden="true"></ion-icon>

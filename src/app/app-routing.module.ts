@@ -41,6 +41,11 @@ const routes: Routes = [
     path: 'todoist/list',
     loadChildren: () => import('./todoist/list/list.module').then( m => m.ListPageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'recipe/:recipeId',
+    loadChildren: () => import('./recipe/recipe.module').then( m => m.RecipePageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

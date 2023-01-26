@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DisplayableMealStatus } from './meal.model';
+import { MealService } from './meal.service';
 
 @Component({
   selector: 'app-meal',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MealPage implements OnInit {
 
-  constructor() { }
+  mealSub: Subscription;
+  meals: DisplayableMealStatus[];
 
-  ngOnInit() {
+  constructor(private mealService: MealService) { }
+
+  display(data: DisplayableMealStatus[]){
+    this.meals = data;
   }
 
+  ngOnInit() {
+    this.mealSub = this.mealService.getMeals().subscribe(data => {
+      this.display(data);
+    });
+  }
+
+  deleteMeal(mealId: string){
+    this.mealService.deleteMeal(mealId).subscribe(response => {
+      this.mealSub = this.mealService.getMeals().subscribe(data => {
+        this.display(data);
+      });
+    });
+  }
 }
