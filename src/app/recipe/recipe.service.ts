@@ -16,4 +16,8 @@ export class RecipeService {
   getRecipes(): Observable<{recipes: Recipe[], count: number}>{
     return this.http.get<{recipes: Recipe[], count: number}>(URL_BACKEND, {});
   }
+
+  getRecipe(recipeId: string): Observable<Recipe>{
+    return this.http.get<Recipe>(URL_BACKEND + '/byID?recipeID=' + recipeId, {});
+  }
 }
