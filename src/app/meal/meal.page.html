@@ -13,7 +13,7 @@
   <ion-tabs>
     <ion-list slot="top" style="height: 100%; background-color: var(--ion-background-color);">
       <ion-card *ngFor="let meal of meals">
-        <ion-card-header [routerLink]="['/recipe/', meal.recipeId]">
+        <ion-card-header [routerLink]="['/recipe/follow/', meal.recipeId]">
           <ion-card-title>
             {{meal.title}}
             <ion-icon class="state-icon" *ngIf="meal.state.ingredientUnavailable.length === 0" name="checkmark-circle-outline"></ion-icon>
@@ -23,7 +23,7 @@
           <img class="recipe-img" alt="Image du repas" width="200px" [src]="meal.imagePath"/>
         </ion-card-header>
 
-        <ion-card-content *ngIf="meal.state.ingredientUnavailable.length > 0" [routerLink]="['/recipe/', meal.recipeId]">
+        <ion-card-content *ngIf="meal.state.ingredientUnavailable.length > 0" [routerLink]="['/recipe/follow/', meal.recipeId]">
           <ion-list>
             <ion-item *ngFor="let ingredient of meal.state.ingredientUnavailable">
               <ion-thumbnail slot="start">

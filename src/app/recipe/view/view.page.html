@@ -35,7 +35,7 @@
       </ion-item>
     </ion-list>
 
-    <ion-button expand="block" slot="top">Préparer</ion-button>
+    <ion-button *ngIf="isLoading === false" expand="block" slot="top" [routerLink]="['/recipe/follow/', recipe._id]">Préparer</ion-button>
 
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/home']">
