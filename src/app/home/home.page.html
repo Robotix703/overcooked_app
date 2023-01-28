@@ -19,7 +19,7 @@
   <ion-tabs>
     <ion-list slot="top">
       <ion-item-sliding *ngFor="let recipe of recipes" #slidingRecipe>
-        <ion-item [routerLink]="['/recipe/', recipe._id]">
+        <ion-item [routerLink]="['/recipe/view/', recipe._id]">
           <ion-thumbnail slot="start">
             <img alt="Image de la recette" [src]="recipe.imagePath" />
           </ion-thumbnail>
