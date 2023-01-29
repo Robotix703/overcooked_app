@@ -1,63 +1,89 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Recettes</ion-title>
-    <ion-segment value="plat">
-      <ion-segment-button value="entree">
-        Entrée
-      </ion-segment-button>
-      <ion-segment-button value="plat">
-        Plat
-      </ion-segment-button>
-      <ion-segment-button value="dessert">
-        Dessert
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
-</ion-header>
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Filtre des recettes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-searchbar (ionChange)="search($event)"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-segment value="Plat" (ionChange)="selectCategory($event)">
+            <ion-segment-button value="Entree">
+              <ion-label>Entrée</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Plat">
+              <ion-label>Plat</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Dessert">
+              <ion-label>Dessert</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ion-menu>
 
-<ion-content>
-  <ion-tabs>
-    <cdk-virtual-scroll-viewport itemSize="72" minBufferPx="1500" maxBufferPx="1500">
-      <ion-list slot="top">
-        <ion-item-sliding *cdkVirtualFor="let recipe of recipes" #slidingRecipe>
-          <ion-item [routerLink]="['/recipe/view/', recipe._id]">
-            <ion-thumbnail slot="start">
-              <img alt="Image de la recette" [src]="recipe.imagePath" />
-            </ion-thumbnail>
-            <ion-label>
-              {{recipe.title}}
-            </ion-label>
-          </ion-item>
+<div class="ion-page" id="main-content">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Recettes</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-          <ion-item-options side="end">
-            <ion-item-option color="tertiary" (click)="createMeal(recipe._id)">
-              <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-    </cdk-virtual-scroll-viewport>
+  <ion-content>
+    <ion-tabs>
+      <cdk-virtual-scroll-viewport itemSize="72" minBufferPx="1500" maxBufferPx="1500">
+        <ion-list slot="top">
+          <ion-item-sliding *cdkVirtualFor="let recipe of recipes" #slidingRecipe>
+            <ion-item [routerLink]="['/recipe/view/', recipe._id]">
+              <ion-thumbnail slot="start">
+                <img alt="Image de la recette" [src]="recipe.imagePath" />
+              </ion-thumbnail>
+              <ion-label>
+                {{recipe.title}}
+              </ion-label>
+            </ion-item>
 
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button [routerLink]="['/home']">
-        <ion-icon name="library" aria-hidden="true"></ion-icon>
-        <ion-label>Recettes</ion-label>
-      </ion-tab-button>
+            <ion-item-options side="end">
+              <ion-item-option color="tertiary" (click)="createMeal(recipe._id)">
+                <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </cdk-virtual-scroll-viewport>
 
-      <ion-tab-button [routerLink]="['/meal']">
-        <ion-icon name="fast-food-outline" aria-hidden="true"></ion-icon>
-        <ion-label>Repas</ion-label>
-      </ion-tab-button>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button [routerLink]="['/home']">
+          <ion-icon name="library" aria-hidden="true"></ion-icon>
+          <ion-label>Recettes</ion-label>
+        </ion-tab-button>
 
-      <ion-tab-button [routerLink]="['/pantry/list']">
-        <ion-icon name="storefront-outline" aria-hidden="true"></ion-icon>
-        <ion-label>Garde Manger</ion-label>
-      </ion-tab-button>
+        <ion-tab-button [routerLink]="['/meal']">
+          <ion-icon name="fast-food-outline" aria-hidden="true"></ion-icon>
+          <ion-label>Repas</ion-label>
+        </ion-tab-button>
 
-      <ion-tab-button [routerLink]="['/todoist/list']">
-        <ion-icon name="receipt-outline" aria-hidden="true"></ion-icon>
-        <ion-label>Todoist</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</ion-content>
+        <ion-tab-button [routerLink]="['/pantry/list']">
+          <ion-icon name="storefront-outline" aria-hidden="true"></ion-icon>
+          <ion-label>Garde Manger</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button [routerLink]="['/todoist/list']">
+          <ion-icon name="receipt-outline" aria-hidden="true"></ion-icon>
+          <ion-label>Todoist</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-content>
+</div>

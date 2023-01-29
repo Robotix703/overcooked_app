@@ -13,8 +13,8 @@ export class RecipeService {
 
   constructor(private http: HttpClient) { }
 
-  getRecipes(): Observable<{recipes: Recipe[], count: number}>{
-    return this.http.get<{recipes: Recipe[], count: number}>(URL_BACKEND, {});
+  getRecipes(category: string, name: string): Observable<{recipes: Recipe[], count: number}>{
+    return this.http.get<{recipes: Recipe[], count: number}>(URL_BACKEND + `/filter?category=${category}&name=${name}`, {});
   }
 
   getRecipe(recipeId: string): Observable<Recipe>{

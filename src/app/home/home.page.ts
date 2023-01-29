@@ -15,6 +15,8 @@ export class HomePage implements OnInit {
   limitedRecipes: Recipe[];
   pageCount: number = 0;
   pageSize: number = 15;
+  searchName: string = "";
+  categorySelected: string = "Plat";
 
   constructor(private recipeService: RecipeService) {}
 
@@ -23,10 +25,24 @@ export class HomePage implements OnInit {
     console.log(this.recipes)
   }
 
-  ngOnInit() {
-    this.recipeSub = this.recipeService.getRecipes().subscribe(data => {
+  search(event: any){
+    this.searchName = event.detail.value;
+    this.getRecipes();
+  }
+
+  selectCategory(event: any){
+    this.categorySelected = event.detail.value;
+    this.getRecipes();
+  }
+
+  getRecipes(){
+    this.recipeSub = this.recipeService.getRecipes(this.categorySelected, this.searchName).subscribe(data => {
       this.display(data.recipes);
     });
+  }
+
+  ngOnInit() {
+    this.getRecipes();
   }
 
   createMeal(recipeId: string){
