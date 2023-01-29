@@ -12,24 +12,22 @@
 
 <ion-content>
   <ion-tabs>
-    <ion-list slot="top">
-      <ion-item-sliding *ngFor="let pantry of pantries" #slidingPantry>
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img alt="Image de l'ingrédient" [src]="pantry.ingredientImage" />
-          </ion-thumbnail>
-          <ion-label>{{pantry.ingredientName}} - {{pantry.quantity}} {{pantry.quantityUnitOfMeasure}}</ion-label>
-          <ion-icon *ngIf="pantry.frozen" name="snow-outline"></ion-icon>
-          <ion-button *ngIf="pantry.expirationDate" (click)="updateExpirationDate(pantry.expirationDate)">{{pantry.expirationDate}}</ion-button>
-        </ion-item>
-
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="deletePantry(pantry._id, slidingPantry)">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+    <cdk-virtual-scroll-viewport itemSize="200" minBufferPx="1500" maxBufferPx="1500">
+      <ion-card slot="top" *cdkVirtualFor="let ingredient of ingredients">
+        <img alt="Image de l'ingrédient" [src]="ingredient.ingredientImagePath" height="100px" width="100px"/>
+        <ion-card-header>
+          <ion-card-title>{{ingredient.ingredientName}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let pantry of ingredient.pantries">
+              <ion-label>{{pantry.quantity}}</ion-label>
+              <ion-button slot="end" color="danger" (click)="deletePantry(pantry._id)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </cdk-virtual-scroll-viewport>
 
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/home']">

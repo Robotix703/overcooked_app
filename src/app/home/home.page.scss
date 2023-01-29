@@ -34,3 +34,8 @@ ion-title{
   text-align: center;
   padding-top: 0.5rem;
 }
+
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
+}

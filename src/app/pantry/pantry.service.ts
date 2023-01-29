@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { DeleteResponse } from '../common.model';
-import { PrettyPantry } from './pantry.model';
+import { IngredientInventory } from './pantry.model';
 
 const URL_BACKEND = environment.apiURL + 'pantry';
 
@@ -14,8 +14,8 @@ export class PantryService {
 
   constructor(private http: HttpClient) { }
 
-  getPantries(): Observable<PrettyPantry[]>{
-    return this.http.get<PrettyPantry[]>(URL_BACKEND + "/prettyPantries", {});
+  getPantries(): Observable<IngredientInventory[]>{
+    return this.http.get<IngredientInventory[]>(URL_BACKEND + "/fullPantryInventory", {});
   }
 
   deletePantry(pantryId: string): Observable<DeleteResponse>{

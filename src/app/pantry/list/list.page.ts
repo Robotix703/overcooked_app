@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IonItemSliding } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { PrettyPantry } from '../pantry.model';
+import { IngredientInventory } from '../pantry.model';
 import { PantryService } from '../pantry.service';
 
 @Component({
@@ -12,12 +11,12 @@ import { PantryService } from '../pantry.service';
 export class ListPage implements OnInit {
 
   pantrySub: Subscription;
-  pantries: PrettyPantry[];
+  ingredients: IngredientInventory[];
 
   constructor(private pantryService: PantryService) { }
 
-  display(data: PrettyPantry[]){
-    this.pantries = data;
+  display(data: IngredientInventory[]){
+    this.ingredients = data;
   }
 
   ngOnInit() {
@@ -26,12 +25,11 @@ export class ListPage implements OnInit {
     });
   }
 
-  deletePantry(pantryId: string, slidingEl: IonItemSliding){
+  deletePantry(pantryId: string){
     this.pantryService.deletePantry(pantryId).subscribe(response => {
       this.pantrySub = this.pantryService.getPantries().subscribe(data => {
         this.display(data);
       });
-      slidingEl.close();
     });
   }
 

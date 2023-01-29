@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { MealPageRoutingModule } from './meal-routing.module';
 
@@ -13,7 +14,8 @@ import { MealPage } from './meal.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    MealPageRoutingModule
+    MealPageRoutingModule,
+    ScrollingModule
   ],
   declarations: [MealPage]
 })

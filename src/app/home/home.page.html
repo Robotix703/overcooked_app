@@ -17,27 +17,26 @@
 
 <ion-content>
   <ion-tabs>
-    <ion-list slot="top">
-      <ion-item-sliding *ngFor="let recipe of recipes" #slidingRecipe>
-        <ion-item [routerLink]="['/recipe/view/', recipe._id]">
-          <ion-thumbnail slot="start">
-            <img alt="Image de la recette" [src]="recipe.imagePath" />
-          </ion-thumbnail>
-          <ion-label>
-            {{recipe.title}}
-          </ion-label>
-        </ion-item>
+    <cdk-virtual-scroll-viewport itemSize="72" minBufferPx="1500" maxBufferPx="1500">
+      <ion-list slot="top">
+        <ion-item-sliding *cdkVirtualFor="let recipe of recipes" #slidingRecipe>
+          <ion-item [routerLink]="['/recipe/view/', recipe._id]">
+            <ion-thumbnail slot="start">
+              <img alt="Image de la recette" [src]="recipe.imagePath" />
+            </ion-thumbnail>
+            <ion-label>
+              {{recipe.title}}
+            </ion-label>
+          </ion-item>
 
-        <ion-item-options side="end">
-          <ion-item-option color="tertiary" (click)="createMeal(recipe._id)">
-            <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+          <ion-item-options side="end">
+            <ion-item-option color="tertiary" (click)="createMeal(recipe._id)">
+              <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </cdk-virtual-scroll-viewport>
 
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/home']">
