@@ -20,7 +20,9 @@
           <!--Instruction-->
           <ion-row>
             <ion-col>
-              <ion-label>{{instruction.text}}</ion-label>
+              <ion-text>
+                <h2>{{instruction.text}}</h2>
+              </ion-text>
             </ion-col>
           </ion-row>
           <!--Ingredients-->
@@ -29,7 +31,7 @@
               <ion-list>
                 <ion-item *ngFor="let ingredient of instruction.composition">
                   <ion-thumbnail slot="start">
-                    <img alt="Image de l'ingrédient" [src]="ingredient.imagePath" />
+                    <img alt="Image de l'ingrédient" height="50px" width="50px" [src]="ingredient.imagePath"/>
                   </ion-thumbnail>
                   <ion-label>
                     {{ingredient.name}} - {{ingredient.quantity}} {{ingredient.unitOfMeasure}}

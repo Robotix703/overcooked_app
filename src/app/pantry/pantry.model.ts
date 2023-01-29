@@ -11,5 +11,6 @@ export interface IngredientInventory {
   ingredientName: string,
   ingredientImagePath: string,
   ingredientFreezable: boolean,
+  ingredientUnitOfMeasure: string,
   pantries: Pantry[]
 }

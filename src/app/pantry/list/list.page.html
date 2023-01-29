@@ -21,7 +21,7 @@
         <ion-card-content>
           <ion-list>
             <ion-item *ngFor="let pantry of ingredient.pantries">
-              <ion-label>{{pantry.quantity}}</ion-label>
+              <ion-label>{{pantry.quantity}} {{ingredient.ingredientUnitOfMeasure}}</ion-label>
               <ion-button slot="end" color="danger" (click)="deletePantry(pantry._id)"><ion-icon name="trash-outline"></ion-icon></ion-button>
             </ion-item>
           </ion-list>
