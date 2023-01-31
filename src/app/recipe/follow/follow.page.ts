@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { IngredientWithQuantity } from 'src/app/meal/meal.model';
 import { PrettyInstruction, Recipe } from '../recipe.model';
@@ -22,10 +22,18 @@ export class FollowPage implements OnInit {
   isLoading: boolean;
   checkedInstructions: number = 0;
   proportion: number;
+  currentTimer: Date;
+  startTimer: number;
+  endTimer: number;
+  timer: any;
+  timeToDisplay: string;
+  toast: any;
+  alarm: HTMLAudioElement;
 
   constructor(private recipeService: RecipeService,
     private navCtrl: NavController,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastController: ToastController) { }
 
   display(recipe: Recipe, instructions: PrettyInstruction[]){
     this.recipe = recipe;
@@ -35,6 +43,8 @@ export class FollowPage implements OnInit {
   }
 
   ngOnInit() {
+    this.alarm = new Audio('assets/music/alarm.mp3');
+
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('recipeId')) {
         this.navCtrl.navigateBack('/home');
@@ -60,5 +70,67 @@ export class FollowPage implements OnInit {
     else this.checkedInstructions--;
 
     this.proportion = this.checkedInstructions / this.instructions.length;
+  }
+
+  async createTimer(count: number){
+    this.startTimer = Date.now();
+    let duration = (count * 60 * 1000);
+    this.endTimer = this.startTimer + duration;
+    this.timer = setInterval(this.timerIntervalFunction, 1000, this.endTimer, this);
+    this.timeToDisplay = this.convertSecondsToText(duration/1000);
+
+    this.toast = await this.toastController.create({
+      message: this.timeToDisplay,
+      duration: duration,
+      position: 'bottom',
+      buttons: [
+        {
+          text: '+1 Min',
+          role: 'info',
+          handler: this.addOneMinute
+        },
+        {
+          text: 'Stop',
+          role: 'cancel',
+          handler: this.stopTimer
+        }
+      ]
+    });
+
+    await this.toast.present();
+  }
+
+  updateTimer(timer: string){
+    this.toast.message = timer;
+  }
+
+  timerIntervalFunction(endTimer: number, that: any){
+    let secondsRemaining = Math.round((endTimer - Date.now())/1000);
+    let timerToDisplay = that.convertSecondsToText(secondsRemaining);
+    that.updateTimer(timerToDisplay);
+
+    if(secondsRemaining <= 0){
+      clearInterval(that.timer);
+    }
+  }
+
+  convertSecondsToText(seconds: number){
+    return (Math.round(seconds/60)) + ":" + (seconds % 60)
+  }
+
+  playAlarm(){
+    this.alarm.play();
+  }
+
+  stopAlarm(){
+    this.alarm.pause();
+  }
+
+  addOneMinute(){
+
+  }
+
+  stopTimer(this: any){
+
   }
 }

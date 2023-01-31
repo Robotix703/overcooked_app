@@ -21,7 +21,10 @@
           <ion-row>
             <ion-col>
               <ion-text>
-                <h2>{{instruction.text}}</h2>
+                <h2>
+                  {{instruction.text}}
+                  <ion-button *ngIf="instruction.cookingTime" slot="end" style="margin-left: 1rem;" (click)="createTimer(instruction.cookingTime)">{{instruction.cookingTime}}'<ion-icon name="stopwatch-outline"></ion-icon></ion-button>
+                </h2>
               </ion-text>
             </ion-col>
           </ion-row>
@@ -45,9 +48,3 @@
     </ion-list>
   </ion-tabs>
 </ion-content>
-
-<ion-fab slot="fixed" vertical="bottom" horizontal="end">
-  <ion-fab-button>
-    <ion-icon name="timer-outline"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
