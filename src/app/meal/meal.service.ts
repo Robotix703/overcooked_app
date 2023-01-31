@@ -21,4 +21,8 @@ export class MealService {
   deleteMeal(mealId: string): Observable<DeleteResponse>{
     return this.http.delete<DeleteResponse>(URL_BACKEND + '/' + mealId);
   }
+
+  createMeal(recipeId: string) {
+    return this.http.post<any>(URL_BACKEND, { recipeID: recipeId });
+  }
 }

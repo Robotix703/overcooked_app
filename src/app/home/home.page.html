@@ -38,6 +38,7 @@
       </ion-buttons>
       <ion-title>Recettes</ion-title>
     </ion-toolbar>
+    <ion-progress-bar *ngIf="isLoading" type="indeterminate"></ion-progress-bar>
   </ion-header>
 
   <ion-content>
@@ -55,7 +56,7 @@
             </ion-item>
 
             <ion-item-options side="end">
-              <ion-item-option color="tertiary" (click)="createMeal(recipe._id)">
+              <ion-item-option color="tertiary" (click)="createMeal(recipe._id, slidingRecipe)">
                 <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
               </ion-item-option>
             </ion-item-options>

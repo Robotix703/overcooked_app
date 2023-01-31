@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IonItemSliding } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { MealService } from '../meal/meal.service';
 import { Recipe } from '../recipe/recipe.model';
 import { RecipeService } from '../recipe/recipe.service';
 
@@ -17,12 +19,12 @@ export class HomePage implements OnInit {
   pageSize: number = 15;
   searchName: string = "";
   categorySelected: string = "Plat";
+  isLoading: boolean = false;
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService, private mealService: MealService) {}
 
   display(data: Recipe[]){
     this.recipes = data;
-    console.log(this.recipes)
   }
 
   search(event: any){
@@ -45,7 +47,12 @@ export class HomePage implements OnInit {
     this.getRecipes();
   }
 
-  createMeal(recipeId: string){
-
+  createMeal(recipeId: string, slidingEl: IonItemSliding ){
+    this.isLoading = true;
+    this.mealService.createMeal(recipeId).subscribe(data => {
+      this.isLoading = false;
+      slidingEl.close();
+      this.getRecipes();
+    });
   }
 }
