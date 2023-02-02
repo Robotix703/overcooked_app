@@ -10,5 +10,76 @@
 </ion-header>
 
 <ion-content>
+  <form (ngSubmit)="createPantry()" #f="ngForm">
+    <ion-grid>
+      <!--Ingredient-->
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Ingredient</ion-label>
+            <ion-input
+              type="text"
+              ngModel
+              name="ingredientName"
+              required
+              (ionChange)="searchIngredient($event)"
+              [value]="ingredientNameInput"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <ion-item *ngFor="let ingredientName of displayedIngredients">
+              <ion-label (click)="fillIngredient(ingredientName)">{{ingredientName}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
 
+      <!--Quantity-->
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <ion-item>
+              <ion-label>Quantité</ion-label>
+              <ion-input ngModel name="quantity" type="number" placeholder="" required></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <!--ExpirationDate-->
+      <ion-row>
+        <ion-col>
+              <ion-datetime presentation="date" ngModel name="expirationDate"></ion-datetime>
+        </ion-col>
+      </ion-row>
+
+      <!--Frozen-->
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Surgelé</ion-label>
+            <ion-checkbox slot="start" (ionChange)="freeze($event)"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <!--Create-->
+      <ion-row>
+        <ion-col>
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+            Créer
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

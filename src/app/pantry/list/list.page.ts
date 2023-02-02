@@ -19,21 +19,27 @@ export class ListPage implements OnInit {
     this.ingredients = data;
   }
 
-  ngOnInit() {
+  getPantries(){
     this.pantrySub = this.pantryService.getPantries().subscribe(data => {
       this.display(data);
     });
   }
 
+  ngOnInit() {
+    this.getPantries();
+  }
+
   deletePantry(pantryId: string){
     this.pantryService.deletePantry(pantryId).subscribe(response => {
-      this.pantrySub = this.pantryService.getPantries().subscribe(data => {
-        this.display(data);
-      });
+      this.getPantries();
     });
   }
 
   updateExpirationDate(expirationDate: string){
     console.log(expirationDate);
+  }
+
+  ionViewWillEnter() {
+    this.getPantries();
   }
 }

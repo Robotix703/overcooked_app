@@ -14,3 +14,10 @@ export interface IngredientInventory {
   ingredientUnitOfMeasure: string,
   pantries: Pantry[]
 }
+
+export interface FormPantry {
+  ingredientName: string;
+  quantity: number;
+  expirationDate: string | null;
+  frozen: boolean;
+}
