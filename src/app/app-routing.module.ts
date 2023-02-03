@@ -33,11 +33,6 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'todoist/create',
-    loadChildren: () => import('./todoist/create/create.module').then( m => m.CreatePageModule),
-    canLoad: [AuthGuard]
-  },
-  {
     path: 'todoist/list',
     loadChildren: () => import('./todoist/list/list.module').then( m => m.ListPageModule),
     canLoad: [AuthGuard]
