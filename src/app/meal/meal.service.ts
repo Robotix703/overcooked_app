@@ -25,4 +25,16 @@ export class MealService {
   createMeal(recipeId: string) {
     return this.http.post<any>(URL_BACKEND, { recipeID: recipeId });
   }
+
+  consumeMealByRecipe(recipeId: string){
+    return this.http.post<any>(URL_BACKEND + "/consume", { recipeID: recipeId });
+  }
+
+  consumeMeal(mealId: string){
+    return this.http.post<any>(URL_BACKEND + "/consume", { mealID: mealId });
+  }
+
+  checkMealByRecipe(recipeId: string){
+    return this.http.get<any>(URL_BACKEND + "/byRecipeId?recipeID=" + recipeId, {});
+  }
 }

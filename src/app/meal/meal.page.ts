@@ -20,6 +20,10 @@ export class MealPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getMeals();
+  }
+
+  getMeals(){
     this.mealSub = this.mealService.getMeals().subscribe(data => {
       this.display(data);
     });
@@ -27,9 +31,13 @@ export class MealPage implements OnInit {
 
   deleteMeal(mealId: string){
     this.mealService.deleteMeal(mealId).subscribe(response => {
-      this.mealSub = this.mealService.getMeals().subscribe(data => {
-        this.display(data);
-      });
+      this.getMeals();
     });
+  }
+
+  consumeMeal(mealID: string){
+    this.mealService.consumeMeal(mealID).subscribe(data => {
+      this.getMeals();
+    })
   }
 }

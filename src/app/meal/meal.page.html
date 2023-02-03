@@ -36,6 +36,7 @@
           </ion-card-content>
 
           <ion-button style="float: right;" color="danger" (click)="deleteMeal(meal._id)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+          <ion-button *ngIf="meal.state.ingredientUnavailable.length === 0" style="float: right;" (click)="consumeMeal(meal._id)"><ion-icon name="archive-outline"></ion-icon></ion-button>
         </ion-card>
       </ion-list>
     </cdk-virtual-scroll-viewport>
