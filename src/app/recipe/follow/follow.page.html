@@ -6,7 +6,6 @@
       ></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="isLoading === false">{{recipe.title}}</ion-title>
-    <ion-button slot="end" style="margin-right: 1rem;" color="success"><ion-icon name="checkmark-outline"></ion-icon></ion-button>
   </ion-toolbar>
   <ion-progress-bar [value]="proportion"></ion-progress-bar>
 </ion-header>

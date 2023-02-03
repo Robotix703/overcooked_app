@@ -29,6 +29,7 @@ export class FollowPage implements OnInit {
   timeToDisplay: string;
   toast: any;
   alarm: HTMLAudioElement;
+  isMeal: boolean = false;
 
   constructor(private recipeService: RecipeService,
     private navCtrl: NavController,
