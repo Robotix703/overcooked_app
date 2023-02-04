@@ -12,38 +12,40 @@
 
 <ion-content>
   <ion-tabs>
-    <ion-list *ngIf="isLoading === false" slot="top">
-      <ion-item *ngFor="let instruction of instructions">
-        <ion-checkbox slot="end" [(ngModel)]="instruction.checked" (ionChange)="onChecked(instruction.checked)"></ion-checkbox>
-        <ion-grid>
-          <!--Instruction-->
-          <ion-row>
-            <ion-col>
-              <ion-text>
-                <h2>
-                  {{instruction.text}}
-                  <ion-button *ngIf="instruction.cookingTime" slot="end" style="margin-left: 1rem;" (click)="createTimer(instruction.cookingTime)">{{instruction.cookingTime}}'<ion-icon name="stopwatch-outline"></ion-icon></ion-button>
-                </h2>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-          <!--Ingredients-->
-          <ion-row>
-            <ion-col>
-              <ion-list>
-                <ion-item *ngFor="let ingredient of instruction.composition">
-                  <ion-thumbnail slot="start">
-                    <img alt="Image de l'ingrédient" height="50px" width="50px" [src]="ingredient.imagePath"/>
-                  </ion-thumbnail>
-                  <ion-label>
-                    {{ingredient.name}} - {{ingredient.quantity}} {{ingredient.unitOfMeasure}}
-                  </ion-label>
-                </ion-item>
-              </ion-list>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-list>
+    <cdk-virtual-scroll-viewport itemSize="200" minBufferPx="150" maxBufferPx="1500">
+      <ion-list *ngIf="isLoading === false" slot="top">
+        <ion-item *cdkVirtualFor="let instruction of instructions">
+          <ion-checkbox slot="end" [(ngModel)]="instruction.checked" (ionChange)="onChecked(instruction.checked)"></ion-checkbox>
+          <ion-grid>
+            <!--Instruction-->
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  <h2>
+                    {{instruction.text}}
+                    <ion-button *ngIf="instruction.cookingTime" slot="end" style="margin-left: 1rem;" (click)="createTimer(instruction.cookingTime)">{{instruction.cookingTime}}'<ion-icon name="stopwatch-outline"></ion-icon></ion-button>
+                  </h2>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <!--Ingredients-->
+            <ion-row>
+              <ion-col>
+                <ion-list>
+                  <ion-item *ngFor="let ingredient of instruction.composition">
+                    <ion-thumbnail slot="start">
+                      <img alt="Image de l'ingrédient" height="50px" width="50px" [src]="ingredient.imagePath"/>
+                    </ion-thumbnail>
+                    <ion-label>
+                      {{ingredient.name}} - {{ingredient.quantity}} {{ingredient.unitOfMeasure}}
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </cdk-virtual-scroll-viewport>
   </ion-tabs>
 </ion-content>

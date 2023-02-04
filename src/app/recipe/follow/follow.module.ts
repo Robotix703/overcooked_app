@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,7 +14,8 @@ import { FollowPage } from './follow.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    FollowPageRoutingModule
+    FollowPageRoutingModule,
+    ScrollingModule
   ],
   declarations: [FollowPage]
 })
