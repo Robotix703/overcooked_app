@@ -42,4 +42,10 @@ export class ListPage implements OnInit {
   ionViewWillEnter() {
     this.getPantries();
   }
+
+  refresh(){
+    this.pantryService.refreshPantry().subscribe(data => {
+      this.getPantries();
+    });
+  }
 }

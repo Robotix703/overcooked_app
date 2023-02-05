@@ -25,4 +25,8 @@ export class PantryService {
   createPantry(formPantry: FormPantry): Observable<any>{
     return this.http.post<any>(URL_BACKEND, {...formPantry});
   }
+
+  refreshPantry(): Observable<any>{
+    return this.http.post<any>(URL_BACKEND + '/refreshTodoist', {});
+  }
 }

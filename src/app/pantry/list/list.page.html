@@ -6,6 +6,7 @@
       ></ion-back-button>
     </ion-buttons>
     <ion-title>Garde Manger</ion-title>
+    <ion-button (click)="refresh()" slot="end" style="margin-right: 1rem;" color="primary"><ion-icon name="refresh-outline"></ion-icon></ion-button>
     <ion-button [routerLink]="['/pantry/create']" slot="end" style="margin-right: 1rem;" color="success"><ion-icon name="add"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
