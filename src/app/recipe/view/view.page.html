@@ -24,17 +24,19 @@
 
 <ion-content>
   <ion-tabs>
-    <ion-img *ngIf="isLoading === false" [src]="recipe.imagePath" slot="top"></ion-img>
-    <ion-list slot="top">
-      <ion-item *ngFor="let ingredient of composition">
-        <ion-thumbnail slot="start">
-          <img alt="Image de l'ingrédient" [src]="ingredient.ingredient.imagePath"/>
-        </ion-thumbnail>
-        <ion-label>
-          {{ingredient.ingredient.name}} - {{ingredient.quantity}} {{ingredient.ingredient.unitOfMeasure}}
-        </ion-label>
-      </ion-item>
-    </ion-list>
+    <ion-img class="mainImg" *ngIf="isLoading === false" [src]="recipe.imagePath" slot="top"></ion-img>
+    <cdk-virtual-scroll-viewport itemSize="72" minBufferPx="150" maxBufferPx="1000">
+      <ion-list slot="top">
+        <ion-item *cdkVirtualFor="let ingredient of composition">
+          <ion-thumbnail slot="start">
+            <img alt="Image de l'ingrédient" [src]="ingredient.ingredient.imagePath"/>
+          </ion-thumbnail>
+          <ion-label>
+            {{ingredient.ingredient.name}} - {{ingredient.quantity}} {{ingredient.ingredient.unitOfMeasure}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </cdk-virtual-scroll-viewport>
 
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/home']">
