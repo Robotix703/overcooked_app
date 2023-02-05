@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IngredientInventory } from '../pantry.model';
 import { PantryService } from '../pantry.service';
+import { AlertController, AlertInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-list',
@@ -12,8 +13,10 @@ export class ListPage implements OnInit {
 
   pantrySub: Subscription;
   ingredients: IngredientInventory[];
+  pantryIdToUpdate: string;
+  expirationDateToUpdate: string;
 
-  constructor(private pantryService: PantryService) { }
+  constructor(private pantryService: PantryService, private alertController: AlertController) { }
 
   display(data: IngredientInventory[]){
     this.ingredients = data;
@@ -35,16 +38,51 @@ export class ListPage implements OnInit {
     });
   }
 
-  updateExpirationDate(expirationDate: string){
-    console.log(expirationDate);
-  }
-
   ionViewWillEnter() {
     this.getPantries();
   }
 
   refresh(){
     this.pantryService.refreshPantry().subscribe(data => {
+      this.getPantries();
+    });
+  }
+
+  async updateDate(pantryId: string, expirationDate: string){
+    this.pantryIdToUpdate = pantryId;
+    this.expirationDateToUpdate = new Date(expirationDate).toISOString().substring(0, 10);
+
+    const alert = await this.alertController.create({
+      header: 'Mettre à jour la date de péremption',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {},
+        },
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: (input: any) => {
+            this.updateExpirationDate(this.pantryIdToUpdate, input[0]);
+          },
+        },
+      ],
+      inputs: [
+        {
+          type: 'date',
+          placeholder: 'Date',
+          id: "date",
+          value: this.expirationDateToUpdate
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+
+  updateExpirationDate(pantryId: string, date: string){
+    this.pantryService.updateExpirationDate(pantryId, date).subscribe(data => {
       this.getPantries();
     });
   }

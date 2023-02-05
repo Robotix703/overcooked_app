@@ -29,4 +29,8 @@ export class PantryService {
   refreshPantry(): Observable<any>{
     return this.http.post<any>(URL_BACKEND + '/refreshTodoist', {});
   }
+
+  updateExpirationDate(pantryId: string, expirationDate: string): Observable<any>{
+    return this.http.put<any>(URL_BACKEND + '/expirationDate/' + pantryId, {expirationDate: expirationDate})
+  }
 }
