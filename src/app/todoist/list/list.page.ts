@@ -13,20 +13,26 @@ export class ListPage implements OnInit {
 
   todoItemSub: Subscription;
   todoitems: TodoItem[];
+  isLoading: boolean = false;
 
   constructor(private todoistService: TodoistService) { }
 
   ngOnInit() {
+    this.display();
+  }
+
+  display(){
+    this.isLoading = true;
     this.todoItemSub = this.todoistService.getTodoItems().subscribe(data => {
       this.todoitems = data.todoItems;
+      this.isLoading = false;
     });
   }
 
   deleteTodoitem(todoItemId: string, slidingEl: IonItemSliding){
+    this.isLoading = true;
     this.todoistService.deleteTodoItems(todoItemId).subscribe(response => {
-      this.todoItemSub = this.todoistService.getTodoItems().subscribe(data => {
-        this.todoitems = data.todoItems;
-      });
+      this.display();
       slidingEl.close();
     });
   }
