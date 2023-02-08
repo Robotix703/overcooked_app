@@ -32,10 +32,28 @@ export class ListPage implements OnInit {
     this.getPantries();
   }
 
-  deletePantry(pantryId: string){
-    this.pantryService.deletePantry(pantryId).subscribe(response => {
-      this.getPantries();
+  async deletePantry(pantryId: string){
+    const alert = await this.alertController.create({
+      header: 'Supprimer ?',
+      buttons: [
+        {
+          text: 'Non',
+          role: 'cancel',
+          handler: () => { },
+        },
+        {
+          text: 'Oui',
+          role: 'confirm',
+          handler: () => {
+            this.pantryService.deletePantry(pantryId).subscribe(response => {
+              this.getPantries();
+            });
+          },
+        },
+      ],
     });
+
+    await alert.present();
   }
 
   ionViewWillEnter() {

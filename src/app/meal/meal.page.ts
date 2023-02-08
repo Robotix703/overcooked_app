@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { DisplayableMealStatus } from './meal.model';
 import { MealService } from './meal.service';
@@ -13,7 +14,7 @@ export class MealPage implements OnInit {
   mealSub: Subscription;
   meals: DisplayableMealStatus[];
 
-  constructor(private mealService: MealService) { }
+  constructor(private mealService: MealService, private alertController: AlertController) { }
 
   display(data: DisplayableMealStatus[]){
     this.meals = data;
@@ -29,16 +30,52 @@ export class MealPage implements OnInit {
     });
   }
 
-  deleteMeal(mealId: string){
-    this.mealService.deleteMeal(mealId).subscribe(response => {
-      this.getMeals();
+  async deleteMeal(mealId: string){
+    const alert = await this.alertController.create({
+      header: 'Supprimer ?',
+      buttons: [
+        {
+          text: 'Non',
+          role: 'cancel',
+          handler: () => { },
+        },
+        {
+          text: 'Oui',
+          role: 'confirm',
+          handler: () => {
+            this.mealService.deleteMeal(mealId).subscribe(response => {
+              this.getMeals();
+            });
+          },
+        },
+      ],
     });
+
+    await alert.present();
   }
 
-  consumeMeal(mealID: string){
-    this.mealService.consumeMeal(mealID).subscribe(data => {
-      this.getMeals();
-    })
+  async consumeMeal(mealID: string){
+    const alert = await this.alertController.create({
+      header: 'Consommer ?',
+      buttons: [
+        {
+          text: 'Non',
+          role: 'cancel',
+          handler: () => { },
+        },
+        {
+          text: 'Oui',
+          role: 'confirm',
+          handler: () => {
+            this.mealService.consumeMeal(mealID).subscribe(data => {
+              this.getMeals();
+            })
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   ionViewWillEnter() {
