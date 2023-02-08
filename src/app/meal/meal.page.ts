@@ -40,4 +40,8 @@ export class MealPage implements OnInit {
       this.getMeals();
     })
   }
+
+  ionViewWillEnter() {
+    this.getMeals();
+  }
 }

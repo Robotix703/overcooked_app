@@ -36,4 +36,8 @@ export class ListPage implements OnInit {
       slidingEl.close();
     });
   }
+
+  ionViewWillEnter() {
+    this.display();
+  }
 }
