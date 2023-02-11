@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   categorySelected: string = "Plat";
   isLoading: boolean = false;
   tags: Tag[] = [];
+  selectedTag: string[] = [];
 
   constructor(
     private recipeService: RecipeService, 
@@ -66,8 +67,18 @@ export class HomePage implements OnInit {
     this.getRecipes();
   }
 
+  selectTag(event: any){
+    let tagId: string = event.detail.value;
+    if(this.selectedTag.includes(tagId)){
+      this.selectedTag = this.selectedTag.filter(e => e != tagId);
+    } else {
+      this.selectedTag.push(tagId);
+    }
+    this.getRecipes();
+  }
+
   getRecipes(){
-    this.recipeSub = this.recipeService.getRecipes(this.categorySelected, this.searchName).subscribe(data => {
+    this.recipeSub = this.recipeService.getRecipes(this.categorySelected, this.searchName, this.selectedTag).subscribe(data => {
       this.display(data.recipes);
     });
   }
