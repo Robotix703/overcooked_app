@@ -51,7 +51,16 @@
                 <img alt="Image de la recette" [src]="recipe.imagePath" />
               </ion-thumbnail>
               <ion-label>
-                {{recipe.title}}
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="auto">
+                      {{recipe.title}}
+                    </ion-col>
+                    <ion-col *ngFor="let tag of recipe.tags" size="auto">
+                      <img *ngIf="recipe.tags.length > 0" [src]="tag.image" width="50" height="50" />
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
               </ion-label>
             </ion-item>
 

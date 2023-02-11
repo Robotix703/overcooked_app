@@ -1,3 +1,5 @@
+import { Tag } from "../home/tag.model"
+
 export interface Recipe{
   _id: string
   title: string
@@ -7,6 +9,19 @@ export interface Recipe{
   duration: number
   lastCooked: Date | null
   composition: string | null
+  tags: string[]
+}
+
+export interface PrettyRecipe{
+  _id: string
+  title: string
+  numberOfLunch: number
+  imagePath: string
+  category: string
+  duration: number
+  lastCooked: Date | null
+  composition: string | null
+  tags: Tag[]
 }
 
 export interface PrettyInstruction {

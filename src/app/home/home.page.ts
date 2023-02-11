@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { IonItemSliding } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { MealService } from '../meal/meal.service';
-import { Recipe } from '../recipe/recipe.model';
+import { PrettyRecipe, Recipe } from '../recipe/recipe.model';
 import { RecipeService } from '../recipe/recipe.service';
+import { Tag } from './tag.model';
+import { TagsService } from './tags.service';
 
 @Component({
   selector: 'app-home',
@@ -13,18 +15,45 @@ import { RecipeService } from '../recipe/recipe.service';
 export class HomePage implements OnInit {
 
   recipeSub: Subscription;
-  recipes: Recipe[];
-  limitedRecipes: Recipe[];
+  tagsSub: Subscription;
+  recipes: PrettyRecipe[];
   pageCount: number = 0;
   pageSize: number = 15;
   searchName: string = "";
   categorySelected: string = "Plat";
   isLoading: boolean = false;
+  tags: Tag[] = [];
 
-  constructor(private recipeService: RecipeService, private mealService: MealService) {}
+  constructor(
+    private recipeService: RecipeService, 
+    private mealService: MealService,
+    private tagService: TagsService
+    ) {}
 
-  display(data: Recipe[]){
-    this.recipes = data;
+  display(recipes: Recipe[]){
+    this.recipes = [];
+
+    for(let recipe of recipes){
+      let tags: Tag[] = [];
+      
+      if(recipe.tags && this.tags){
+        for(let tag of recipe.tags){
+          tags.push(this.tags.find(e => e._id === tag));
+        }
+      }
+      
+      this.recipes.push({
+        _id: recipe._id,
+        title: recipe.title,
+        numberOfLunch: recipe.numberOfLunch,
+        imagePath: recipe.imagePath,
+        category: recipe.category,
+        duration: recipe.duration,
+        lastCooked: recipe.lastCooked,
+        composition: recipe.composition,
+        tags: tags
+      });
+    }
   }
 
   search(event: any){
@@ -43,7 +72,14 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  getTags(){
+    this.tagsSub = this.tagService.getTags().subscribe(data => {
+      this.tags = data;
+    });
+  }
+
+  async ngOnInit() {
+    await this.getTags();
     this.getRecipes();
   }
 
