@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonItemSliding } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { MealService } from '../meal/meal.service';
-import { PrettyRecipe, Recipe } from '../recipe/recipe.model';
+import { PrettyRecipe, Recipe, categoriesRecipe } from '../recipe/recipe.model';
 import { RecipeService } from '../recipe/recipe.service';
 import { Tag } from './tag.model';
 import { TagsService } from './tags.service';
@@ -20,7 +20,8 @@ export class HomePage implements OnInit {
   pageCount: number = 0;
   pageSize: number = 15;
   searchName: string = "";
-  categorySelected: string = "Plat";
+  categoriesRecipe: string[] = categoriesRecipe;
+  categorySelected: string = categoriesRecipe[1];
   isLoading: boolean = false;
   tags: Tag[] = [];
   selectedTag: string[] = [];

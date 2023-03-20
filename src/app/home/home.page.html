@@ -15,15 +15,9 @@
       <!--Category-->
       <ion-row>
         <ion-col>
-          <ion-segment value="Plat" (ionChange)="selectCategory($event)">
-            <ion-segment-button value="Entree">
-              <ion-label>Entrée</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="Plat">
-              <ion-label>Plat</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="Dessert">
-              <ion-label>Dessert</ion-label>
+          <ion-segment [value]="categoriesRecipe[1]" (ionChange)="selectCategory($event)">
+            <ion-segment-button *ngFor="let category of categoriesRecipe" [value]="category">
+              <ion-label>{{category}}</ion-label>
             </ion-segment-button>
           </ion-segment>
         </ion-col>

@@ -40,3 +40,9 @@ export interface PrettyIngredient {
   quantity: number,
   unitOfMeasure: string
 }
+
+export const categoriesRecipe = [
+  "Accompagnement",
+  "Plat",
+  "Dessert"
+]
