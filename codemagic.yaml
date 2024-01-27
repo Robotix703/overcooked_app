@@ -11,6 +11,7 @@ workflows:
     scripts:
       - name: Install npm dependencies for Ionic project
         script: |
+          export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
           npm install
           ionic build --prod
           npx cap add android
