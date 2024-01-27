@@ -11,7 +11,6 @@ workflows:
     scripts:
       - name: Install npm dependencies for Ionic project
         script: |
-          export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
           npm install
           ionic build --prod
           npx cap add android
@@ -22,6 +21,7 @@ workflows:
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
       - name: Build Android release
         script: |
+          export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
           cd android
           ./gradlew assembleRelease
     artifacts:
