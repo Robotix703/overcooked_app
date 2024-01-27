@@ -24,6 +24,7 @@ export class HomePage implements OnInit {
   isLoading: boolean = false;
   tags: Tag[] = [];
   selectedTag: string[] = [];
+  sort: string = "random";
 
   constructor(
     private recipeService: RecipeService, 
@@ -62,6 +63,11 @@ export class HomePage implements OnInit {
     this.getRecipes();
   }
 
+  selectSort(event: any){
+    this.sort = event.detail.value;
+    this.getRecipes();
+  }
+
   selectCategory(event: any){
     this.categorySelected = event.detail.value;
     this.getRecipes();
@@ -78,7 +84,7 @@ export class HomePage implements OnInit {
   }
 
   getRecipes(){
-    this.recipeSub = this.recipeService.getRecipes(this.categorySelected, this.searchName, this.selectedTag).subscribe(data => {
+    this.recipeSub = this.recipeService.getRecipes(this.categorySelected, this.searchName, this.selectedTag, this.sort).subscribe(data => {
       this.display(data.recipes);
     });
   }

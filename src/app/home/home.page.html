@@ -12,6 +12,19 @@
           <ion-searchbar (ionChange)="search($event)"></ion-searchbar>
         </ion-col>
       </ion-row>
+      <!--Sort-->
+      <ion-row>
+        <ion-col>
+          <ion-segment value="random" (ionChange)="selectSort($event)">
+            <ion-segment-button value="random">
+              <ion-label>Hasard</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="numberOfTimeCooked">
+              <ion-label>Populaire</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
       <!--Category-->
       <ion-row>
         <ion-col>
