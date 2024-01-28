@@ -5,9 +5,9 @@
         [defaultHref]="'/home'"
       ></ion-back-button>
     </ion-buttons>
+    <!--Title-->
     <ion-title *ngIf="isLoading === false">{{recipe.title}}</ion-title>
   </ion-toolbar>
-  <ion-progress-bar [value]="proportion"></ion-progress-bar>
 </ion-header>
 
 <ion-content>
@@ -15,7 +15,6 @@
     <cdk-virtual-scroll-viewport itemSize="200" minBufferPx="150" maxBufferPx="1500">
       <ion-list *ngIf="isLoading === false" slot="top">
         <ion-item *cdkVirtualFor="let instruction of instructions">
-          <ion-checkbox slot="end" [(ngModel)]="instruction.checked" (ionChange)="onChecked(instruction.checked)"></ion-checkbox>
           <ion-grid>
             <!--Instruction-->
             <ion-row>

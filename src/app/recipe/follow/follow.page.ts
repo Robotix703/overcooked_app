@@ -20,8 +20,6 @@ export class FollowPage implements OnInit {
   recipeId: string;
   composition: IngredientWithQuantity[];
   isLoading: boolean;
-  checkedInstructions: number = 0;
-  proportion: number;
   currentTimer: Date;
   startTimer: number;
   endTimer: number;
@@ -64,13 +62,6 @@ export class FollowPage implements OnInit {
 
   sortInstruction(a: PrettyInstruction, b: PrettyInstruction){
     return a.order - b.order;
-  }
-
-  onChecked(value: boolean){
-    if(value) this.checkedInstructions++;
-    else this.checkedInstructions--;
-
-    this.proportion = this.checkedInstructions / this.instructions.length;
   }
 
   async createTimer(count: number){
