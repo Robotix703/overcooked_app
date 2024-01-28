@@ -46,6 +46,11 @@ const routes: Routes = [
     path: 'recipe/follow/:recipeId',
     loadChildren: () => import('./recipe/follow/follow.module').then( m => m.FollowPageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'recipe/edit/:recipeId',
+    loadChildren: () => import('./recipe/edit/edit.module').then( m => m.EditPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 
