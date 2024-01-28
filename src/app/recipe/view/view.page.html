@@ -1,10 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <!--Back button-->
     <ion-buttons slot="start">
       <ion-back-button
         [defaultHref]="'/home'"
       ></ion-back-button>
     </ion-buttons>
+    <!--Title-->
     <ion-grid *ngIf="isLoading === false">
       <ion-row>
         <ion-col>
@@ -18,13 +20,17 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+    <!--Follow button-->
     <ion-button *ngIf="isLoading === false" slot="end" [routerLink]="['/recipe/follow/', recipe._id]" style="padding-right: 1rem;"><ion-icon name="albums-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-tabs>
+    <!--Image-->
     <ion-img class="mainImg" *ngIf="isLoading === false" [src]="recipe.imagePath" slot="top"></ion-img>
+
+    <!--Ingredients-->
     <cdk-virtual-scroll-viewport itemSize="72" minBufferPx="150" maxBufferPx="1000">
       <ion-list slot="top">
         <ion-item *cdkVirtualFor="let ingredient of composition">
@@ -38,6 +44,7 @@
       </ion-list>
     </cdk-virtual-scroll-viewport>
 
+    <!--Bottom bar-->
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/home']">
         <ion-icon name="library" aria-hidden="true"></ion-icon>
