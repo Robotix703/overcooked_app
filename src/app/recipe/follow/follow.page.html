@@ -7,13 +7,15 @@
     </ion-buttons>
     <!--Title-->
     <ion-title *ngIf="isLoading === false">{{recipe.title}}</ion-title>
+    <!--Edit button-->
+    <ion-button *ngIf="isLoading === false" slot="end" [routerLink]="['/recipe/edit/', recipe._id]" style="padding-right: 1rem;"><ion-icon name="settings-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-tabs>
-    <cdk-virtual-scroll-viewport itemSize="200" minBufferPx="150" maxBufferPx="1500">
-      <ion-list *ngIf="isLoading === false" slot="top">
+    <cdk-virtual-scroll-viewport itemSize="200" minBufferPx="150" maxBufferPx="1500" *ngIf="isLoading === false">
+      <ion-list slot="top">
         <ion-item *cdkVirtualFor="let instruction of instructions">
           <ion-grid>
             <!--Instruction-->
@@ -22,7 +24,6 @@
                 <ion-text>
                   <h2>
                     {{instruction.text}}
-                    <ion-button *ngIf="instruction.cookingTime" slot="end" style="margin-left: 1rem;" (click)="createTimer(instruction.cookingTime)">{{instruction.cookingTime}}'<ion-icon name="stopwatch-outline"></ion-icon></ion-button>
                   </h2>
                 </ion-text>
               </ion-col>

@@ -60,69 +60,24 @@ export class FollowPage implements OnInit {
     });
   }
 
+  ionViewWillEnter(){
+    this.route.paramMap.subscribe(paramMap => {
+      if (!paramMap.has('recipeId')) {
+        this.navCtrl.navigateBack('/home');
+        return;
+      }
+      this.recipeId = paramMap.get('recipeId');
+
+      this.isLoading = true;
+      this.recipeSub = this.recipeService.getRecipe(this.recipeId).subscribe(recipeData => {
+        this.instructionSub = this.recipeService.getInstructions(this.recipeId).subscribe(instructionData => {
+          this.display(recipeData, instructionData);
+        });
+      });
+    });
+  }
+
   sortInstruction(a: PrettyInstruction, b: PrettyInstruction){
     return a.order - b.order;
-  }
-
-  async createTimer(count: number){
-    this.startTimer = Date.now();
-    let duration = (count * 60 * 1000);
-    this.endTimer = this.startTimer + duration;
-    this.timer = setInterval(this.timerIntervalFunction, 1000, this.endTimer, this);
-    this.timeToDisplay = this.convertSecondsToText(duration/1000);
-
-    this.toast = await this.toastController.create({
-      message: this.timeToDisplay,
-      duration: duration,
-      position: 'bottom',
-      buttons: [
-        {
-          text: '+1 Min',
-          role: 'info',
-          handler: this.addOneMinute
-        },
-        {
-          text: 'Stop',
-          role: 'cancel',
-          handler: this.stopTimer
-        }
-      ]
-    });
-
-    await this.toast.present();
-  }
-
-  updateTimer(timer: string){
-    this.toast.message = timer;
-  }
-
-  timerIntervalFunction(endTimer: number, that: any){
-    let secondsRemaining = Math.round((endTimer - Date.now())/1000);
-    let timerToDisplay = that.convertSecondsToText(secondsRemaining);
-    that.updateTimer(timerToDisplay);
-
-    if(secondsRemaining <= 0){
-      clearInterval(that.timer);
-    }
-  }
-
-  convertSecondsToText(seconds: number){
-    return (Math.round(seconds/60)) + ":" + (seconds % 60)
-  }
-
-  playAlarm(){
-    this.alarm.play();
-  }
-
-  stopAlarm(){
-    this.alarm.pause();
-  }
-
-  addOneMinute(){
-
-  }
-
-  stopTimer(this: any){
-
   }
 }
