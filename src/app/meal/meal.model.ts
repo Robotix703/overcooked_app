@@ -9,7 +9,6 @@ export interface DisplayableMealStatus {
 
 export interface MealStatus {
   ingredientAvailable: IngredientWithQuantity[],
-  ingredientAlmostExpire: IngredientWithQuantity[],
   ingredientUnavailable: IngredientWithQuantity[]
 }
 
@@ -24,5 +23,4 @@ export interface Ingredient {
   imagePath: string
   consumable: boolean
   unitOfMeasure: string
-  shelfLife: number | null
 }

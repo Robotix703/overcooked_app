@@ -18,7 +18,6 @@
             <ion-card-title>
               {{meal.title}}
               <ion-icon class="state-icon" *ngIf="meal.state.ingredientUnavailable.length === 0" name="checkmark-circle-outline"></ion-icon>
-              <ion-icon class="state-icon" *ngIf="meal.state.ingredientUnavailable.length === 0 && meal.state.ingredientAlmostExpire.length > 0" name="alert-circle-outline"></ion-icon>
               <ion-icon class="state-icon" *ngIf="meal.state.ingredientUnavailable.length > 0" name="ban-outline"></ion-icon>
             </ion-card-title>
             <img class="recipe-img" alt="Image du repas" width="200px" [src]="meal.imagePath"/>

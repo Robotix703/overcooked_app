@@ -47,12 +47,9 @@ export class CreatePage implements OnInit {
   createPantry(){
     if (!this.form.valid) { return; }
 
-    let expirationDate = this.form.value.expirationDate ? new Date(this.form.value.expirationDate).toLocaleDateString("fr-FR", { timeZone: "Europe/Paris" }) : null;
-
     const pantryData: FormPantry = {
       ingredientName: this.form.value.ingredientName,
-      quantity: this.form.value.quantity,
-      expirationDate: expirationDate
+      quantity: this.form.value.quantity
     };
 
     this.pantryService.createPantry(pantryData).subscribe(data => {

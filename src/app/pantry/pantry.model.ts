@@ -2,7 +2,6 @@ export interface Pantry {
   _id: string
   ingredientID: string
   quantity: number
-  expirationDate: Date | null
 }
 
 export interface IngredientInventory {
@@ -16,5 +15,4 @@ export interface IngredientInventory {
 export interface FormPantry {
   ingredientName: string;
   quantity: number;
-  expirationDate: string | null;
 }
