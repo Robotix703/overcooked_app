@@ -47,13 +47,9 @@ export class CreatePage implements OnInit {
   createPantry(){
     if (!this.form.valid) { return; }
 
-    let expirationDate = this.form.value.expirationDate ? new Date(this.form.value.expirationDate).toLocaleDateString("fr-FR", { timeZone: "Europe/Paris" }) : null;
-
     const pantryData: FormPantry = {
       ingredientName: this.form.value.ingredientName,
-      quantity: this.form.value.quantity,
-      expirationDate: expirationDate,
-      frozen: this.checked
+      quantity: this.form.value.quantity
     };
 
     this.pantryService.createPantry(pantryData).subscribe(data => {
@@ -63,9 +59,5 @@ export class CreatePage implements OnInit {
 
   fillIngredient(ingredientName: string){
     this.ingredientNameInput = ingredientName;
-  }
-
-  freeze(checkbox: any){
-    this.checked = checkbox.detail.checked;
   }
 }
