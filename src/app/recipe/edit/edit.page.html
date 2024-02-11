@@ -7,13 +7,61 @@
     </ion-buttons>
     <!--Title-->
     <ion-title *ngIf="isLoading === false">{{recipe.title}}</ion-title>
+    <!--Save button-->
+    <ion-button color="success" *ngIf="isLoading === false" slot="end" (click)="onSave()" style="padding-right: 1rem;"><ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">edit</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!--Main content-->
+<ion-content>
+  <div *ngIf="editInstructions; then thenTemplateName else elseTemplateName">
+    Here is never showing
+  </div>
+
+  <ng-template #thenTemplateName>
+      If isValid is true
+  </ng-template>
+
+  <ng-template #elseTemplateName>
+      If isValid is false
+  </ng-template>
+
+  <!--Edit Description-->
+  <div *ngIf="editInstructions">
+    <!--Description tab-->
+    <form (ngSubmit)="editRecipe()" #f="ngForm" slot="top">
+      <ion-list>
+        <ion-item>
+          <ion-input label="Default input"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+  </div>
+
+  <!--Edit Instruction-->
+  <div *ngIf="!editInstructions">
+    <!--Description tab-->
+    <form (ngSubmit)="editRecipe()" #g="ngForm" slot="top">
+      <ion-list>
+        <ion-item>
+          <ion-input label="Default input"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+  </div>
 </ion-content>
+
+<!--Select Edit mode-->
+<ion-footer>
+  <ion-toolbar>
+    <!--Tab selector-->
+    <ion-segment value="description" (ionChange)="onChangeEditMode($event)">
+      <ion-segment-button value="description">
+        <ion-label>Descriptipn</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="instructions">
+        <ion-label>Instructions</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

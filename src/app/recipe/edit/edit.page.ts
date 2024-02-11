@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { PrettyInstruction, Recipe } from '../recipe.model';
 import { Subscription } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit',
@@ -17,6 +18,10 @@ export class EditPage implements OnInit {
   isLoading: boolean;
   recipeSub: Subscription;
   instructionSub: Subscription;
+  editInstructions: boolean = false;
+
+  @ViewChild('f', { static: false }) form: NgForm;
+  @ViewChild('g', { static: false }) form2: NgForm;
 
   constructor(private recipeService: RecipeService,
     private navCtrl: NavController,
@@ -39,9 +44,24 @@ export class EditPage implements OnInit {
     });
   }
 
+  onSave(){
+    this.navCtrl.navigateBack('/recipe/follow/' + this.recipeId);
+  }
+
+  editRecipe(){
+
+  }
+
+  onChangeEditMode(event){
+    let type = event.detail.value;
+    this.editInstructions = (type === "instructions");
+    console.log(this.editInstructions);
+  }
+
   display(recipe: Recipe, instructions: PrettyInstruction[]){
+    console.log(recipe);
+    console.log(instructions);
     this.recipe = recipe;
     this.isLoading = false;
   }
-
 }
