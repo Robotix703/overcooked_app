@@ -52,8 +52,7 @@ export class CreatePage implements OnInit {
     const pantryData: FormPantry = {
       ingredientName: this.form.value.ingredientName,
       quantity: this.form.value.quantity,
-      expirationDate: expirationDate,
-      frozen: this.checked
+      expirationDate: expirationDate
     };
 
     this.pantryService.createPantry(pantryData).subscribe(data => {
@@ -63,9 +62,5 @@ export class CreatePage implements OnInit {
 
   fillIngredient(ingredientName: string){
     this.ingredientNameInput = ingredientName;
-  }
-
-  freeze(checkbox: any){
-    this.checked = checkbox.detail.checked;
   }
 }

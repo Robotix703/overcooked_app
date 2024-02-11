@@ -25,5 +25,4 @@ export interface Ingredient {
   consumable: boolean
   unitOfMeasure: string
   shelfLife: number | null
-  freezable: boolean
 }
