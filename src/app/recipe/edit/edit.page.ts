@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { PrettyInstruction, Recipe } from '../recipe.model';
 import { Subscription } from 'rxjs';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit',
@@ -19,9 +18,11 @@ export class EditPage implements OnInit {
   recipeSub: Subscription;
   instructionSub: Subscription;
   editInstructions: boolean = false;
-
-  @ViewChild('f', { static: false }) form: NgForm;
-  @ViewChild('g', { static: false }) form2: NgForm;
+  
+  recipeTitle: string;
+  recipeNumberOfLunch: number;
+  recipeCategory: string;
+  recipeDuration: number;
 
   constructor(private recipeService: RecipeService,
     private navCtrl: NavController,
@@ -45,17 +46,18 @@ export class EditPage implements OnInit {
   }
 
   onSave(){
-    this.navCtrl.navigateBack('/recipe/follow/' + this.recipeId);
-  }
-
-  editRecipe(){
-
+    this.recipeService.editRecipeDescription(this.recipeId, this.recipeTitle, this.recipeNumberOfLunch, this.recipeCategory, this.recipeDuration).subscribe((response : any) => {
+      if(response.status === "OK"){
+        this.navCtrl.navigateBack('/recipe/follow/' + this.recipeId);
+      } else {
+        console.error(response);
+      }
+    });
   }
 
   onChangeEditMode(event){
     let type = event.detail.value;
     this.editInstructions = (type === "instructions");
-    console.log(this.editInstructions);
   }
 
   display(recipe: Recipe, instructions: PrettyInstruction[]){
@@ -63,5 +65,10 @@ export class EditPage implements OnInit {
     console.log(instructions);
     this.recipe = recipe;
     this.isLoading = false;
+
+    this.recipeTitle = recipe.title;
+    this.recipeNumberOfLunch = recipe.numberOfLunch;
+    this.recipeCategory = recipe.category;
+    this.recipeDuration = recipe.duration;
   }
 }

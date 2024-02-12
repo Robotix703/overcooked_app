@@ -25,4 +25,13 @@ export class RecipeService {
   getInstructions(recipeId: string): Observable<PrettyInstruction[]>{
     return this.http.get<PrettyInstruction[]>(URL_BACKEND + '/instructions?recipeID=' + recipeId, {});
   }
+
+  editRecipeDescription(recipeId: string, recipeTitle: string, recipeNumberOfLunch: number, recipeCategory: string, recipeDuration: number){
+    return this.http.put(URL_BACKEND + '/' + recipeId, {
+      title: recipeTitle,
+      numberOfLunch: recipeNumberOfLunch,
+      category: recipeCategory,
+      duration: recipeDuration
+    });
+  }
 }

@@ -19,36 +19,35 @@
   </div>
 
   <ng-template #thenTemplateName>
-      If isValid is true
+    <!--Instructions tab-->
+    <h1>Instructions</h1>
   </ng-template>
 
   <ng-template #elseTemplateName>
-      If isValid is false
+    <div class="inputForm">
+      <!--Description tab-->
+      <ion-list>
+        <!--Title-->
+        <ion-item>
+          <ion-input label="Titre" type="text" [(ngModel)]="recipeTitle" text-right></ion-input>
+        </ion-item>
+        <!--Number Of Lunch-->
+        <ion-item>
+          <ion-input label="Nombre de Repas" type="number" [(ngModel)]="recipeNumberOfLunch" text-right></ion-input>
+        </ion-item>
+        <!--Category-->
+        <ion-select style="margin-left: 1rem;" label="Catégorie" placeholder="Catégorie" [(ngModel)]="recipeCategory" label-placement="stacked">
+          <ion-select-option value="Entree">Entrée</ion-select-option>
+          <ion-select-option value="Plat">Plat</ion-select-option>
+          <ion-select-option value="Dessert">Dessert</ion-select-option>
+        </ion-select>
+        <!--Duration-->
+        <ion-item>
+          <ion-input label="Durée (min)" type="number" [(ngModel)]="recipeDuration" text-right></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
   </ng-template>
-
-  <!--Edit Description-->
-  <div *ngIf="editInstructions">
-    <!--Description tab-->
-    <form (ngSubmit)="editRecipe()" #f="ngForm" slot="top">
-      <ion-list>
-        <ion-item>
-          <ion-input label="Default input"></ion-input>
-        </ion-item>
-      </ion-list>
-    </form>
-  </div>
-
-  <!--Edit Instruction-->
-  <div *ngIf="!editInstructions">
-    <!--Description tab-->
-    <form (ngSubmit)="editRecipe()" #g="ngForm" slot="top">
-      <ion-list>
-        <ion-item>
-          <ion-input label="Default input"></ion-input>
-        </ion-item>
-      </ion-list>
-    </form>
-  </div>
 </ion-content>
 
 <!--Select Edit mode-->
@@ -57,7 +56,7 @@
     <!--Tab selector-->
     <ion-segment value="description" (ionChange)="onChangeEditMode($event)">
       <ion-segment-button value="description">
-        <ion-label>Descriptipn</ion-label>
+        <ion-label>Description</ion-label>
       </ion-segment-button>
       <ion-segment-button value="instructions">
         <ion-label>Instructions</ion-label>
