@@ -34,4 +34,8 @@ export class RecipeService {
       duration: recipeDuration
     });
   }
+
+  editRecipeInstructions(recipeId: string, instructions: PrettyInstruction[]){
+    return this.http.put(URL_BACKEND + '/updateInstructions/' + recipeId, {instructions: JSON.stringify(instructions)});
+  }
 }

@@ -20,7 +20,20 @@
 
   <ng-template #thenTemplateName>
     <!--Instructions tab-->
-    <h1>Instructions</h1>
+    <ion-content>
+      <!--Content-->
+      <ion-list>
+        <ion-item *ngFor="let instruction of recipeInstructions; let index">
+          <ion-item>
+            <ion-textarea [autoGrow]="true" [(ngModel)]="instruction.text"></ion-textarea>
+          </ion-item>
+        </ion-item>
+      </ion-list>
+      <!--Technique-->
+      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-content>
   </ng-template>
 
   <ng-template #elseTemplateName>
