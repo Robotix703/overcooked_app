@@ -18,31 +18,48 @@
     Here is never showing
   </div>
 
+  <!--Instructions tab-->
   <ng-template #thenTemplateName>
-    <!--Instructions tab-->
-    <ion-content>
+    <div class="inputForm">
       <!--Content-->
-      <ion-list>
+      <ion-list style="background-color: var(--ion-background-color);">
+        <!--Instructions-->
         <div *ngFor="let instruction of recipeInstructions; let index" style="margin-bottom: 1rem;">
+          <!--Text-->
           <ion-item>
             <ion-textarea [autoGrow]="true" [(ngModel)]="instruction.text"></ion-textarea>
           </ion-item>
+          <!--Order-->
           <ion-item>
             <ion-input label="Ordre" type="number" [(ngModel)]="instruction.order"></ion-input>
           </ion-item>
-          <hr>
+          <!--Composition-->
+          <div class="row">
+            <ion-item *ngFor="let ingredient of instruction.composition">
+              <!--Image-->
+              <ion-avatar aria-hidden="true" slot="start">
+                <img alt="" src={{ingredient.imagePath}}/>
+              </ion-avatar>
+              <!--Name-->
+              <ion-label>{{ingredient.name}}</ion-label>
+              <!--Quantity-->
+              <ion-item>
+                <ion-input label="Quantité" type="number" [(ngModel)]="ingredient.quantity"></ion-input>
+              </ion-item>
+            </ion-item>
+          </div>
         </div>
       </ion-list>
       <!--Technique-->
       <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-    </ion-content>
+    </div>
   </ng-template>
 
+  <!--Description tab-->
   <ng-template #elseTemplateName>
     <div class="inputForm">
-      <!--Description tab-->
       <ion-list>
         <!--Title-->
         <ion-item>
