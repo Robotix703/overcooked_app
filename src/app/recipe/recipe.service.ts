@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PrettyInstruction, Recipe } from './recipe.model';
+import { Tag } from '../home/tag.model';
 
 const URL_BACKEND = environment.apiURL + 'recipe';
 
@@ -26,16 +27,22 @@ export class RecipeService {
     return this.http.get<PrettyInstruction[]>(URL_BACKEND + '/instructions?recipeID=' + recipeId, {});
   }
 
-  editRecipeDescription(recipeId: string, recipeTitle: string, recipeNumberOfLunch: number, recipeCategory: string, recipeDuration: number){
+  editRecipeDescription(recipeId: string, recipeTitle: string, recipeNumberOfLunch: number, recipeCategory: string, recipeDuration: number, recipeTagIds: string[]){
     return this.http.put(URL_BACKEND + '/' + recipeId, {
       title: recipeTitle,
       numberOfLunch: recipeNumberOfLunch,
       category: recipeCategory,
-      duration: recipeDuration
+      duration: recipeDuration,
+      composition: undefined,
+      tags: JSON.stringify(recipeTagIds)
     });
   }
 
   editRecipeInstructions(recipeId: string, instructions: PrettyInstruction[]){
     return this.http.put(URL_BACKEND + '/updateInstructions/' + recipeId, {instructions: JSON.stringify(instructions)});
+  }
+
+  getTags(): Observable<Tag[]>{
+    return this.http.get<Tag[]>(environment.apiURL + 'tag/', {});
   }
 }

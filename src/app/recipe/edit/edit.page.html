@@ -79,6 +79,12 @@
         <ion-item>
           <ion-input label="Durée (min)" type="number" [(ngModel)]="recipeDuration" text-right></ion-input>
         </ion-item>
+        <!--Tags-->
+        <ion-item>
+          <ion-select aria-label="Tags" [multiple]="true" placeholder="Tags" [(ngModel)]="recipeTagsID">
+            <ion-select-option *ngFor="let tag of tags" [value]=tag._id>{{tag.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
       </ion-list>
     </div>
   </ng-template>

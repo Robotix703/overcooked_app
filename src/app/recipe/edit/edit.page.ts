@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PrettyInstruction, Recipe } from '../recipe.model';
 import { Subscription } from 'rxjs';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { Tag } from '../../home/tag.model';
 
 @Component({
   selector: 'app-edit',
@@ -18,12 +19,15 @@ export class EditPage implements OnInit {
   isLoading: boolean;
   recipeSub: Subscription;
   instructionSub: Subscription;
+  tagSub: Subscription;
+  tags: Tag[];
   editInstructions: boolean = false;
   
   recipeTitle: string;
   recipeNumberOfLunch: number;
   recipeCategory: string;
   recipeDuration: number;
+  recipeTagsID: string[];
 
   recipeInstructions: PrettyInstruction[];
 
@@ -46,11 +50,15 @@ export class EditPage implements OnInit {
         });
       });
     });
+
+    this.tagSub = this.recipeService.getTags().subscribe(tags => {
+      this.tags = tags;
+    });
   }
 
   onSave(){
     if(!this.editInstructions){
-      this.recipeService.editRecipeDescription(this.recipeId, this.recipeTitle, this.recipeNumberOfLunch, this.recipeCategory, this.recipeDuration).subscribe((response : any) => {
+      this.recipeService.editRecipeDescription(this.recipeId, this.recipeTitle, this.recipeNumberOfLunch, this.recipeCategory, this.recipeDuration, this.recipeTagsID).subscribe((response : any) => {
         if(response.status === "OK"){
           this.navCtrl.navigateBack('/recipe/follow/' + this.recipeId);
         } else {
@@ -85,6 +93,8 @@ export class EditPage implements OnInit {
     this.recipeDuration = recipe.duration;
 
     this.recipeInstructions = instructions;
+
+    this.recipeTagsID = recipe.tags;
   }
 
   onIonInfinite(ev) {
