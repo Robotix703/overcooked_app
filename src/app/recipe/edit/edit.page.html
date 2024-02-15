@@ -46,6 +46,8 @@
               <ion-item>
                 <ion-input label="Quantité" type="number" [(ngModel)]="ingredient.quantity"></ion-input>
               </ion-item>
+              <!--Remove-->
+              <ion-button color="danger" (click)="removeIngredient(instruction._id, ingredient.name)"><ion-icon name="trash-outline"></ion-icon></ion-button>
             </ion-item>
           </div>
         </div>

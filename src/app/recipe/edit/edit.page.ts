@@ -59,7 +59,7 @@ export class EditPage implements OnInit {
   onSave(){
     if(!this.editInstructions){
       this.recipeService.editRecipeDescription(this.recipeId, this.recipeTitle, this.recipeNumberOfLunch, this.recipeCategory, this.recipeDuration, this.recipeTagsID).subscribe((response : any) => {
-        if(response.status === "OK"){
+        if(response.message === "OK"){
           this.navCtrl.navigateBack('/recipe/follow/' + this.recipeId);
         } else {
           console.error(response);
@@ -67,7 +67,7 @@ export class EditPage implements OnInit {
       });
     } else {
       this.recipeService.editRecipeInstructions(this.recipeId, this.recipeInstructions).subscribe((response : any) => {
-        if(response.status === "OK"){
+        if(response.message === "OK"){
           this.navCtrl.navigateBack('/recipe/follow/' + this.recipeId);
         } else {
           console.error(response);
@@ -95,6 +95,13 @@ export class EditPage implements OnInit {
     this.recipeInstructions = instructions;
 
     this.recipeTagsID = recipe.tags;
+  }
+
+  removeIngredient(instructionId: string, ingredientname: string){
+    let instructionNumber = this.recipeInstructions.findIndex(e => e._id === instructionId);
+    this.recipeInstructions[instructionNumber].composition = this.recipeInstructions[instructionNumber].composition.filter(e => e.name !== ingredientname);
+
+    this.display(this.recipe, this.recipeInstructions);
   }
 
   onIonInfinite(ev) {
