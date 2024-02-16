@@ -50,6 +50,15 @@
               <ion-button color="danger" (click)="removeIngredient(instruction._id, ingredient.name)"><ion-icon name="trash-outline"></ion-icon></ion-button>
             </ion-item>
           </div>
+          <!--Remove-->
+          <ion-button color="danger" [id]=instruction._id><ion-icon name="trash-outline"></ion-icon></ion-button>
+          <ion-alert
+            [trigger]=instruction._id
+            header="Confirmer la suppression de l'instruction ?"
+            [message]=instruction.text
+            [buttons]="alertButtons"
+            (didDismiss)="setResult($event, instruction._id)"
+          ></ion-alert>
         </div>
       </ion-list>
       <!--Technique-->

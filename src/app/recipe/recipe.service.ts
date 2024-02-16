@@ -45,4 +45,8 @@ export class RecipeService {
   getTags(): Observable<Tag[]>{
     return this.http.get<Tag[]>(environment.apiURL + 'tag/', {});
   }
+
+  deleteInstruction(instructionID: string){
+    return this.http.delete(environment.apiURL + 'instruction/' + instructionID, {});
+  }
 }

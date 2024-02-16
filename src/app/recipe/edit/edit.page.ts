@@ -31,6 +31,17 @@ export class EditPage implements OnInit {
 
   recipeInstructions: PrettyInstruction[];
 
+  public alertButtons = [
+    {
+      text: 'Annuler',
+      role: 'cancel'
+    },
+    {
+      text: 'OK',
+      role: 'confirm'
+    },
+  ];
+
   constructor(private recipeService: RecipeService,
     private navCtrl: NavController,
     private route: ActivatedRoute) { }
@@ -102,6 +113,19 @@ export class EditPage implements OnInit {
     this.recipeInstructions[instructionNumber].composition = this.recipeInstructions[instructionNumber].composition.filter(e => e.name !== ingredientname);
 
     this.display(this.recipe, this.recipeInstructions);
+  }
+
+  setResult(ev: any, instructionId: string) {
+    if(ev.detail.role === "confirm"){
+      this.recipeService.deleteInstruction(instructionId).subscribe((response: any) => {
+        if(response.message === "OK"){
+          this.recipeInstructions = this.recipeInstructions.filter(e => e._id !== instructionId);
+          this.display(this.recipe, this.recipeInstructions);
+        } else {
+          console.error(response);
+        }
+      });
+    }
   }
 
   onIonInfinite(ev) {
