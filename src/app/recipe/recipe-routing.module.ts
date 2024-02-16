@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'follow',
     loadChildren: () => import('./follow/follow.module').then( m => m.FollowPageModule)
+  },
+  {
+    path: 'edit',
+    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
   }
 ];
 

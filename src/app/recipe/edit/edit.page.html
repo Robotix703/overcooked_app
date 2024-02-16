@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        [defaultHref]="'/home'"
+      ></ion-back-button>
+    </ion-buttons>
+    <!--Title-->
+    <ion-title *ngIf="isLoading === false">{{recipe.title}}</ion-title>
+    <!--Add ingredient-->
+    <ion-button color="success" *ngIf="isLoading === false && editInstructions === true" slot="end" (click)="onAddInstruction()" style="margin-right: 2rem;"><ion-icon name="add-outline"></ion-icon></ion-button> 
+    <!--Save button-->
+    <ion-button color="success" *ngIf="isLoading === false" slot="end" (click)="onSave()" style="padding-right: 1rem;"><ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<!--Main content-->
+<ion-content>
+  <div *ngIf="editInstructions; then thenTemplateName else elseTemplateName">
+    Here is never showing
+  </div>
+
+  <!--Instructions tab-->
+  <ng-template #thenTemplateName>
+    <div class="inputForm">
+      <!--Content-->
+      <ion-list style="background-color: var(--ion-background-color);">
+        <!--Instructions-->
+        <div *ngFor="let instruction of recipeInstructions; let index" style="margin-bottom: 1rem;">
+          <!--Text-->
+          <ion-item>
+            <ion-textarea [autoGrow]="true" [(ngModel)]="instruction.text"></ion-textarea>
+          </ion-item>
+          <!--Order-->
+          <ion-item>
+            <ion-input label="Ordre" type="number" [(ngModel)]="instruction.order"></ion-input>
+          </ion-item>
+          <!--Composition-->
+          <div class="row">
+            <ion-item *ngFor="let ingredient of instruction.composition">
+              <!--Image-->
+              <ion-avatar aria-hidden="true" slot="start">
+                <img alt="" src={{ingredient.imagePath}}/>
+              </ion-avatar>
+              <!--Name-->
+              <ion-label>{{ingredient.name}}</ion-label>
+              <!--Quantity-->
+              <ion-item>
+                <ion-input label="Quantité" type="number" [(ngModel)]="ingredient.quantity"></ion-input>
+              </ion-item>
+              <!--Remove-->
+              <ion-button color="danger" (click)="removeIngredient(instruction._id, ingredient.name)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+            </ion-item>
+          </div>
+          <!--Add Ingredient-->
+          <ion-button color="success" (click)="openIngredientSelection(instruction)">Ajouter un ingrédient</ion-button>
+          <!--Remove-->
+          <ion-button color="danger" [id]=instruction._id><ion-icon name="trash-outline"></ion-icon></ion-button>
+          <ion-alert
+            [trigger]=instruction._id
+            header="Confirmer la suppression de l'instruction ?"
+            [message]=instruction.text
+            [buttons]="alertButtons"
+            (didDismiss)="setResult($event, instruction._id)"
+          ></ion-alert>
+        </div>
+      </ion-list>
+      <!--Technique-->
+      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+  </ng-template>
+
+  <!--Description tab-->
+  <ng-template #elseTemplateName>
+    <div class="inputForm">
+      <ion-list>
+        <!--Title-->
+        <ion-item>
+          <ion-input label="Titre" type="text" [(ngModel)]="recipeTitle" text-right></ion-input>
+        </ion-item>
+        <!--Number Of Lunch-->
+        <ion-item>
+          <ion-input label="Nombre de Repas" type="number" [(ngModel)]="recipeNumberOfLunch" text-right></ion-input>
+        </ion-item>
+        <!--Category-->
+        <ion-select style="margin-left: 1rem;" label="Catégorie" placeholder="Catégorie" [(ngModel)]="recipeCategory" label-placement="stacked">
+          <ion-select-option value="Entree">Entrée</ion-select-option>
+          <ion-select-option value="Plat">Plat</ion-select-option>
+          <ion-select-option value="Dessert">Dessert</ion-select-option>
+        </ion-select>
+        <!--Duration-->
+        <ion-item>
+          <ion-input label="Durée (min)" type="number" [(ngModel)]="recipeDuration" text-right></ion-input>
+        </ion-item>
+        <!--Tags-->
+        <ion-item>
+          <ion-select aria-label="Tags" [multiple]="true" placeholder="Tags" [(ngModel)]="recipeTagsID">
+            <ion-select-option *ngFor="let tag of tags" [value]=tag._id>{{tag.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ng-template>
+</ion-content>
+
+<!--Modal search ingredient-->
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Recherche d'ingrédient</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeIngredientSelection()">Fermer</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">
+      <ion-searchbar [debounce]="1000" (ionInput)="handleIngredientSearch($event)"></ion-searchbar>
+
+      <!--Results-->
+      <ion-list>
+        <ion-item *ngFor="let ingredientFound of ingredientsFound">
+          <ion-label (click)="onIngredientSelect(ingredientFound)">{{ ingredientFound.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!--Select Edit mode-->
+<ion-footer>
+  <ion-toolbar>
+    <!--Tab selector-->
+    <ion-segment value="description" (ionChange)="onChangeEditMode($event)">
+      <ion-segment-button value="description">
+        <ion-label>Description</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="instructions">
+        <ion-label>Instructions</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

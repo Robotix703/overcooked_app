@@ -1,3 +1,4 @@
+<!--Side Menu-->
 <ion-menu contentId="main-content">
   <ion-header>
     <ion-toolbar>
@@ -56,7 +57,9 @@
   </ion-content>
 </ion-menu>
 
+<!--Content-->
 <div class="ion-page" id="main-content">
+  <!--Header-->
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -67,11 +70,14 @@
     <ion-progress-bar *ngIf="isLoading" type="indeterminate"></ion-progress-bar>
   </ion-header>
 
+  <!--Content-->
   <ion-content>
     <ion-tabs>
+      <!--Recipe List-->
       <cdk-virtual-scroll-viewport itemSize="72" minBufferPx="1500" maxBufferPx="1500">
         <ion-list slot="top">
           <ion-item-sliding *cdkVirtualFor="let recipe of recipes" #slidingRecipe>
+            <!--Recipe-->
             <ion-item [routerLink]="['/recipe/view/', recipe._id]">
               <ion-thumbnail slot="start">
                 <img alt="Image de la recette" [src]="recipe.imagePath" />
@@ -90,6 +96,7 @@
               </ion-label>
             </ion-item>
 
+            <!--Create Meal-->
             <ion-item-options side="end">
               <ion-item-option color="tertiary" (click)="createMeal(recipe._id, slidingRecipe)">
                 <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
@@ -99,6 +106,7 @@
         </ion-list>
       </cdk-virtual-scroll-viewport>
 
+      <!--Bottom Tab Bar-->
       <ion-tab-bar slot="bottom">
         <ion-tab-button [routerLink]="['/home']">
           <ion-icon name="library" aria-hidden="true"></ion-icon>
