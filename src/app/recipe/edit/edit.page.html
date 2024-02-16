@@ -7,6 +7,8 @@
     </ion-buttons>
     <!--Title-->
     <ion-title *ngIf="isLoading === false">{{recipe.title}}</ion-title>
+    <!--Add ingredient-->
+    <ion-button color="success" *ngIf="isLoading === false && editInstructions === true" slot="end" (click)="onAddInstruction()" style="margin-right: 2rem;"><ion-icon name="add-outline"></ion-icon></ion-button> 
     <!--Save button-->
     <ion-button color="success" *ngIf="isLoading === false" slot="end" (click)="onSave()" style="padding-right: 1rem;"><ion-icon name="checkmark-circle-outline"></ion-icon></ion-button>
   </ion-toolbar>

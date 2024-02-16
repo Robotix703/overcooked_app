@@ -117,6 +117,13 @@ export class EditPage implements OnInit {
 
   setResult(ev: any, instructionId: string) {
     if(ev.detail.role === "confirm"){
+      //New
+      if(instructionId === "NEW"){
+        this.recipeInstructions = this.recipeInstructions.filter(e => e._id !== instructionId);
+        this.display(this.recipe, this.recipeInstructions);
+        return;
+      }
+      //Existing
       this.recipeService.deleteInstruction(instructionId).subscribe((response: any) => {
         if(response.message === "OK"){
           this.recipeInstructions = this.recipeInstructions.filter(e => e._id !== instructionId);
@@ -126,6 +133,20 @@ export class EditPage implements OnInit {
         }
       });
     }
+  }
+
+  onAddInstruction(){
+    console.log("Add instruction");
+    let newInstruction : PrettyInstruction = {
+      _id: "NEW",
+      text: "",
+      recipeID: this.recipeId,
+      composition: [],
+      order: this.recipeInstructions.length + 1,
+      cookingTime: null
+    };
+    this.recipeInstructions.push(newInstruction);
+    this.display(this.recipe, this.recipeInstructions);
   }
 
   onIonInfinite(ev) {
