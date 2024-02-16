@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PrettyInstruction, Recipe } from './recipe.model';
 import { Tag } from '../home/tag.model';
+import { Ingredient } from '../meal/meal.model';
 
 const URL_BACKEND = environment.apiURL + 'recipe';
 
@@ -48,5 +49,9 @@ export class RecipeService {
 
   deleteInstruction(instructionID: string){
     return this.http.delete(environment.apiURL + 'instruction/' + instructionID, {});
+  }
+
+  searchIngredients(name: string): Observable<{ingredients: Ingredient[], ingredientCount: number}>{
+    return this.http.get<{ingredients: Ingredient[], ingredientCount: number}>(environment.apiURL + 'ingredient/name?name=' + name, {});
   }
 }

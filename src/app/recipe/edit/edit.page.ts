@@ -4,8 +4,8 @@ import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { PrettyInstruction, Recipe } from '../recipe.model';
 import { Subscription } from 'rxjs';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { Tag } from '../../home/tag.model';
+import { Ingredient } from 'src/app/meal/meal.model';
 
 @Component({
   selector: 'app-edit',
@@ -20,6 +20,7 @@ export class EditPage implements OnInit {
   recipeSub: Subscription;
   instructionSub: Subscription;
   tagSub: Subscription;
+  ingredientSub: Subscription;
   tags: Tag[];
   editInstructions: boolean = false;
   
@@ -31,7 +32,10 @@ export class EditPage implements OnInit {
 
   recipeInstructions: PrettyInstruction[];
 
-  public alertButtons = [
+  ingredientsFound: Ingredient[];
+  instructionSelectedForIngredient: PrettyInstruction;
+
+  alertButtons = [
     {
       text: 'Annuler',
       role: 'cancel'
@@ -41,6 +45,8 @@ export class EditPage implements OnInit {
       role: 'confirm'
     },
   ];
+
+  isModalOpen = false;
 
   constructor(private recipeService: RecipeService,
     private navCtrl: NavController,
@@ -93,8 +99,6 @@ export class EditPage implements OnInit {
   }
 
   display(recipe: Recipe, instructions: PrettyInstruction[]){
-    console.log(recipe);
-    console.log(instructions);
     this.recipe = recipe;
     this.isLoading = false;
 
@@ -136,7 +140,6 @@ export class EditPage implements OnInit {
   }
 
   onAddInstruction(){
-    console.log("Add instruction");
     let newInstruction : PrettyInstruction = {
       _id: "NEW",
       text: "",
@@ -146,6 +149,33 @@ export class EditPage implements OnInit {
       cookingTime: null
     };
     this.recipeInstructions.push(newInstruction);
+    this.display(this.recipe, this.recipeInstructions);
+  }
+
+  openIngredientSelection(instruction: PrettyInstruction) {
+    this.isModalOpen = true;
+    this.instructionSelectedForIngredient = instruction;
+  }
+
+  closeIngredientSelection() {
+    this.isModalOpen = false;
+  }
+
+  handleIngredientSearch(event) {
+    const ingredientName = event.target.value.toLowerCase();
+    this.ingredientSub = this.recipeService.searchIngredients(ingredientName).subscribe((result: {ingredients: Ingredient[], ingredientCount: number}) => {
+      this.ingredientsFound = result.ingredients;
+    });
+  }
+
+  onIngredientSelect(ingredientSelected: Ingredient){
+    this.isModalOpen = false;
+    this.instructionSelectedForIngredient.composition.push({
+      name: ingredientSelected.name,
+      imagePath: ingredientSelected.imagePath,
+      quantity: 1,
+      unitOfMeasure: ingredientSelected.unitOfMeasure
+    });
     this.display(this.recipe, this.recipeInstructions);
   }
 

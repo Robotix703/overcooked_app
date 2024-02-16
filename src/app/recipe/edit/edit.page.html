@@ -52,6 +52,8 @@
               <ion-button color="danger" (click)="removeIngredient(instruction._id, ingredient.name)"><ion-icon name="trash-outline"></ion-icon></ion-button>
             </ion-item>
           </div>
+          <!--Add Ingredient-->
+          <ion-button color="success" (click)="openIngredientSelection(instruction)">Ajouter un ingrédient</ion-button>
           <!--Remove-->
           <ion-button color="danger" [id]=instruction._id><ion-icon name="trash-outline"></ion-icon></ion-button>
           <ion-alert
@@ -102,6 +104,31 @@
     </div>
   </ng-template>
 </ion-content>
+
+<!--Modal search ingredient-->
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Recherche d'ingrédient</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeIngredientSelection()">Fermer</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">
+      <ion-searchbar [debounce]="1000" (ionInput)="handleIngredientSearch($event)"></ion-searchbar>
+
+      <!--Results-->
+      <ion-list>
+        <ion-item *ngFor="let ingredientFound of ingredientsFound">
+          <ion-label (click)="onIngredientSelect(ingredientFound)">{{ ingredientFound.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
 
 <!--Select Edit mode-->
 <ion-footer>
