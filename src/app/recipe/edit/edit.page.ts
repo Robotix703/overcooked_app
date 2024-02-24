@@ -145,8 +145,7 @@ export class EditPage implements OnInit {
       text: "",
       recipeID: this.recipeId,
       composition: [],
-      order: this.recipeInstructions.length + 1,
-      cookingTime: null
+      order: this.recipeInstructions.length + 1
     };
     this.recipeInstructions.push(newInstruction);
     this.display(this.recipe, this.recipeInstructions);

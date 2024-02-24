@@ -29,8 +29,7 @@ export interface PrettyInstruction {
   text: string,
   recipeID: string,
   composition: PrettyIngredient[],
-  order: number,
-  cookingTime: number | null
+  order: number
 }
 
 export interface PrettyIngredient {
