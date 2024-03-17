@@ -47,7 +47,7 @@
         <ion-col>
           <ion-list>
             <ion-item *ngFor="let tag of tags">
-              <ion-checkbox (ionChange)="selectTag($event)" slot="start" [value]="tag._id"></ion-checkbox>
+              <ion-checkbox (ionChange)="selectTag($event)" slot="start" aria-label="Tags" [value]="tag._id" ></ion-checkbox>
               <ion-label>{{ tag.name }}</ion-label>
             </ion-item>
           </ion-list>
