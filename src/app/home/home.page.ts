@@ -38,8 +38,8 @@ export class HomePage implements OnInit {
     for(let recipe of recipes){
       let tags: Tag[] = [];
       
-      if(recipe.tagsId && this.tags){
-        for(let tag of recipe.tagsId){
+      if(recipe.tags && this.tags){
+        for(let tag of recipe.tags){
           tags.push(this.tags.find(e => e._id === tag));
         }
       }
@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
         duration: recipe.duration,
         lastCooked: recipe.lastCooked,
         composition: recipe.composition,
-        tagsId: tags.map(e => e._id)
+        tags: tags
       });
     }
   }
@@ -85,7 +85,6 @@ export class HomePage implements OnInit {
 
   getRecipes(){
     this.recipeSub = this.recipeService.getRecipes(this.categorySelected, this.searchName, this.selectedTag, this.sort).subscribe(data => {
-      console.log(data);
       this.display(data.recipes);
     });
   }

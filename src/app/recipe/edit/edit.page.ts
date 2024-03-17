@@ -109,7 +109,7 @@ export class EditPage implements OnInit {
 
     this.recipeInstructions = instructions;
 
-    this.recipeTagsID = recipe.tagsId;
+    this.recipeTagsID = recipe.tags;
   }
 
   removeIngredient(instructionId: string, ingredientname: string){
